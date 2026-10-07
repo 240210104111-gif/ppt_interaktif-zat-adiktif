@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zat Adiktif - Pop Up Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#1b1147;font-family:Nunito,Arial,sans-serif}
+body{display:flex;align-items:center;justify-content:center}
+#stage{width:1280px;height:720px;position:relative;flex:none;transform-origin:center;perspective:1800px;border-radius:28px;overflow:hidden;box-shadow:0 30px 80px #000a;background:linear-gradient(135deg,#6c3bff,#00b7ff 55%,#00e0a4);background-size:300% 300%;animation:bg 14s ease infinite}
+@keyframes bg{50%{background-position:100% 100%}}
+.fl{position:absolute;font-size:46px;opacity:.5;animation:fly linear infinite;pointer-events:none;filter:drop-shadow(0 8px 6px #0004)}
+@keyframes fly{from{transform:translateY(780px) rotate(0)}to{transform:translateY(-120px) rotate(360deg)}}
+.slide{position:absolute;inset:0;padding:48px 70px 90px;display:none;transform-origin:left center;color:#fff}
+.slide.on{display:block;animation:flipIn .8s cubic-bezier(.2,.9,.3,1) both}
+.slide.out{display:block;animation:flipOut .5s ease both}
+@keyframes flipIn{from{opacity:0;transform:rotateY(-70deg) scale(.9)}to{opacity:1;transform:none}}
+@keyframes flipOut{to{opacity:0;transform:rotateY(60deg) scale(.9)}}
+h1,h2,h3{font-family:'Baloo 2',cursive;font-weight:800;line-height:1.05}
+h1{font-size:84px;text-shadow:0 6px 0 #0004,0 14px 20px #0003}
+h2{font-size:50px;text-shadow:0 4px 0 #0004;margin-bottom:6px}
+.tag{display:inline-block;background:#ffd23f;color:#3b1d8f;font:800 20px 'Baloo 2';padding:4px 18px;border-radius:30px;box-shadow:0 5px 0 #c99a00;margin-bottom:12px}
+p,li{font-size:25px;line-height:1.45;font-weight:700}
+.card{background:#ffffffee;color:#2a1a6e;border-radius:26px;padding:22px 28px;box-shadow:0 10px 0 #0003,0 20px 30px #0003;transition:.3s}
+.card:hover{transform:translateY(-8px) rotateX(6deg) scale(1.03)}
+.pop>*{opacity:0;animation:pop .6s cubic-bezier(.3,1.6,.5,1) forwards}
+.on .pop>*:nth-child(1){animation-delay:.3s}.on .pop>*:nth-child(2){animation-delay:.5s}.on .pop>*:nth-child(3){animation-delay:.7s}.on .pop>*:nth-child(4){animation-delay:.9s}
+@keyframes pop{from{opacity:0;transform:translateY(60px) scale(.5) rotateX(60deg)}to{opacity:1;transform:none}}
+.big{font-size:190px;display:inline-block;animation:bob 2.6s ease-in-out infinite;filter:drop-shadow(0 25px 15px #0006)}
+@keyframes bob{50%{transform:translateY(-26px) rotateY(25deg) rotateZ(-5deg)}}
+.row{display:flex;gap:30px;align-items:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.btn{font:800 24px 'Baloo 2';border:0;border-radius:50px;padding:10px 30px;cursor:pointer;color:#3b1d8f;background:#ffd23f;box-shadow:0 7px 0 #c99a00;transition:.2s}
+.btn:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 11px 0 #c99a00,0 0 25px #ffd23f}
+.btn:active{transform:translateY(5px);box-shadow:0 2px 0 #c99a00}
+#nav{position:absolute;bottom:22px;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:22px;z-index:9}
+#dots{display:flex;gap:8px}
+#dots i{width:14px;height:14px;border-radius:50%;background:#fff6;transition:.3s;cursor:pointer}
+#dots i.a{background:#ffd23f;transform:scale(1.5);box-shadow:0 0 12px #ffd23f}
+#bar{position:absolute;top:0;left:0;height:8px;background:#ffd23f;transition:.5s;z-index:9;box-shadow:0 0 14px #ffd23f}
+.flip{perspective:900px;height:150px;cursor:pointer}
+.fi{position:relative;width:100%;height:100%;transition:.7s;transform-style:preserve-3d}
+.flip.f .fi{transform:rotateY(180deg)}
+.fi>div{position:absolute;inset:0;backface-visibility:hidden;border-radius:24px;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;font:800 26px 'Baloo 2';box-shadow:0 8px 0 #0003}
+.ff{background:#fff;color:#3b1d8f}.fb{background:#ffd23f;color:#3b1d8f;transform:rotateY(180deg);font:700 21px Nunito!important}
+.tabs{display:flex;gap:16px;margin:10px 0 16px}
+.tab{opacity:.7}.tab.a{opacity:1;background:#fff;box-shadow:0 7px 0 #bbb}
+.opt{display:block;width:100%;margin:8px 0;text-align:left;font:700 22px Nunito;padding:10px 20px;border-radius:18px;border:3px solid #6c3bff33;background:#fff;color:#2a1a6e;cursor:pointer;transition:.2s}
+.opt:hover{transform:translateX(10px);border-color:#6c3bff}
+.opt.ok{background:#2ee59d;animation:pop .5s}.opt.no{background:#ff7a7a;animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-12px)}75%{transform:translateX(12px)}}
+.cf{position:absolute;width:12px;height:18px;top:-30px;z-index:20;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(780px) rotate(720deg)}}
+.hint{font:700 18px Nunito;opacity:.9;margin-top:8px}
+</style></head><body>
+<div id="stage">
+<div id="bar"></div>
+
+<!-- 1 COVER -->
+<section class="slide" style="text-align:center;padding-top:70px">
+ <div class="tag">IPA • Kelas IX • Fase D</div>
+ <h1>ZAT ADIKTIF</h1><h2 style="font-size:40px">Kenali Bahayanya, Jauhi Sebelum Terlambat! 🚫</h2>
+ <div style="margin-top:20px"><span class="big" style="font-size:150px">🧪</span><span class="big" style="font-size:150px;animation-delay:.4s">🧠</span><span class="big" style="font-size:150px;animation-delay:.8s">🚭</span></div>
+ <p style="margin-top:6px">Sistem Koordinasi, Homeostasis, dan Kesehatan Tubuh Manusia</p>
+ <p class="hint">👉 Klik tombol “Mulai” di bawah untuk membuka buku!</p>
+</section>
+
+<!-- 2 CP -->
+<section class="slide">
+ <div class="tag">🎯 Capaian Pembelajaran</div><h2>Apa yang Akan Kamu Capai?</h2>
+ <div class="card pop" style="margin-top:14px"><div>
+  <p>Pada akhir Fase D, siswa Kelas IX mampu <b>mengidentifikasi, mengelompokkan, dan menganalisis</b> karakteristik jenis zat adiktif (<b>Narkotika, Psikotropika, dan Zat Psikoaktif Lainnya</b>) serta efek kerjanya pada sistem saraf: <b>stimulan, depresan, dan halusinogen</b>.</p>
+  <p style="margin-top:12px">Dicapai lewat pengamatan media visual, studi literasi, dan diskusi kelompok berbasis <b>Problem Based Learning</b> secara tepat, sistematis, dan kritis.</p></div></div>
+ <div class="row" style="justify-content:center;margin-top:20px;font-size:70px"><span class="big" style="font-size:80px">🔍</span><span class="big" style="font-size:80px;animation-delay:.3s">📚</span><span class="big" style="font-size:80px;animation-delay:.6s">💬</span></div>
+</section>
+
+<!-- 3 TP -->
+<section class="slide">
+ <div class="tag">🏆 Tujuan Pembelajaran</div><h2>3 Misi Belajar Kita</h2>
+ <div class="pop" style="margin-top:14px;display:grid;gap:18px">
+  <div class="card row"><span style="font-size:60px">1️⃣</span><p><b>TP 1:</b> Menjelaskan pengertian zat adiktif serta membedakan prinsip kerjanya secara umum.</p></div>
+  <div class="card row"><span style="font-size:60px">2️⃣</span><p><b>TP 2:</b> Mengidentifikasi dan mengelompokkan jenis zat adiktif (Narkotika, Psikotropika, Zat Psikoaktif Lainnya).</p></div>
+  <div class="card row"><span style="font-size:60px">3️⃣</span><p><b>TP 3:</b> Menganalisis karakteristik zat adiktif berdasarkan pengaruhnya pada sistem saraf (Stimulan, Depresan, Halusinogen).</p></div>
+ </div>
+</section>
+
+<!-- 4 PENGERTIAN -->
+<section class="slide">
+ <div class="tag">📖 Materi A</div><h2>Apa Itu Zat Adiktif?</h2>
+ <div class="row" style="margin-top:10px"><span class="big" style="font-size:150px">⚠️</span>
+ <div class="card"><p>Zat adiktif adalah zat yang membuat orang <b>ingin menggunakannya lagi terus-menerus</b> sehingga bisa menyebabkan <b>ketergantungan</b>. Zat ini memengaruhi <b>sistem saraf</b>, kondisi fisik, dan psikologis.</p></div></div>
+ <div class="grid pop" style="margin-top:20px;grid-template-columns:repeat(4,1fr)">
+  <div class="flip"><div class="fi"><div class="ff">🚬 Nikotin</div><div class="fb">Ada pada tanaman tembakau</div></div></div>
+  <div class="flip"><div class="fi"><div class="ff">🍺 Alkohol</div><div class="fb">Mengandung etanol</div></div></div>
+  <div class="flip"><div class="fi"><div class="ff">💊 Narkotika &amp; Psikotropika</div><div class="fb">Memengaruhi sistem saraf</div></div></div>
+  <div class="flip"><div class="fi"><div class="ff">🧴 Inhalan</div><div class="fb">Dihirup, misal lem &amp; tiner</div></div></div>
+ </div>
+ <p class="hint">👆 Klik kartu untuk membaliknya! Ketergantungan terjadi bila zat dipakai berulang sampai tubuh &amp; pikiran terbiasa.</p>
+</section>
+
+<!-- 5-9 JENIS (diisi lewat JS) -->
+<section class="slide jenis" data-i="0"></section>
+<section class="slide jenis" data-i="1"></section>
+<section class="slide jenis" data-i="2"></section>
+<section class="slide jenis" data-i="3"></section>
+<section class="slide jenis" data-i="4"></section>
+
+<!-- 10 PENGARUH SARAF -->
+<section class="slide">
+ <div class="tag">🧠 Materi C</div><h2>Pengaruh pada Sistem Saraf</h2>
+ <div class="tabs"><button class="btn tab a" data-t="0">⚡ Stimulan</button><button class="btn tab" data-t="1">🌙 Depresan</button><button class="btn tab" data-t="2">🌀 Halusinogen</button></div>
+ <div class="row"><span class="big" id="tIc" style="font-size:150px">⚡</span><div class="card" id="tBox" style="flex:1"></div></div>
+</section>
+
+<!-- 11 KUIS -->
+<section class="slide">
+ <div class="tag">🎮 Ayo Uji Pemahamanmu</div><h2 id="qT">Kuis Kilat</h2>
+ <div class="card" style="margin-top:12px"><p id="qQ" style="margin-bottom:8px"></p><div id="qO"></div></div>
+ <p class="hint" id="qS"></p>
+</section>
+
+<!-- 12 PENUTUP -->
+<section class="slide" style="text-align:center;padding-top:50px">
+ <h1 style="font-size:70px">Terima Kasih! 🎉</h1>
+ <div class="big" style="font-size:150px">🛡️</div>
+ <div class="card" style="margin:8px 90px"><p><b>Ingat:</b> Zat adiktif memengaruhi sistem saraf dan bisa menyebabkan ketergantungan. Jauhi nikotin, alkohol, narkotika, psikotropika, dan inhalan yang disalahgunakan. Hidup sehat dimulai dari pilihanmu! 💪</p></div>
+ <button class="btn" style="margin-top:14px" onclick="go(0)">🔄 Ulangi dari Awal</button>
+</section>
+
+<div id="nav"><button class="btn" id="pv">◀ Kembali</button><div id="dots"></div><button class="btn" id="nx">Mulai ▶</button></div>
+</div>
+
+<script>
+const J=[
+{e:'🚬',n:'Nikotin',d:'Zat adiktif pada tanaman tembakau dan produk tembakau. Pemakaian berulang membuat tubuh dan pikiran ketergantungan, sehingga sulit berhenti.',k:['Terdapat pada produk tembakau','Memengaruhi kerja sistem saraf','Menimbulkan keinginan memakai lagi','Dipakai berulang → ketergantungan']},
+{e:'🍺',n:'Alkohol',d:'Zat adiktif yang memengaruhi sistem saraf. Alkohol dalam minuman beralkohol umumnya berupa etanol.',k:['Mengandung etanol','Memengaruhi sistem saraf','Memengaruhi kondisi fisik &amp; psikologis','Dipakai berulang → ketergantungan']},
+{e:'💉',n:'Narkotika',d:'Zat yang memengaruhi sistem saraf dan kondisi tubuh. Sebagian dipakai di bidang medis, tetapi harus sesuai ketentuan dan pengawasan.',k:['Memengaruhi sistem saraf','Memengaruhi fisik &amp; psikologis','Penggunaan medis ada ketentuannya','Disalahgunakan → ketergantungan']},
+{e:'💊',n:'Psikotropika',d:'Zat yang memengaruhi sistem saraf pusat sehingga mengubah kondisi psikologis: aktivitas, perasaan, perilaku, dan mental.',k:['Memengaruhi sistem saraf pusat','Memengaruhi kondisi psikologis','Mengubah aktivitas &amp; perilaku','Tidak tepat → ketergantungan']},
+{e:'🧴',n:'Inhalan',d:'Zat yang masuk ke tubuh dengan cara dihirup lewat saluran pernapasan. Contoh yang disalahgunakan: lem dan tiner.',k:['Digunakan dengan cara dihirup','Masuk lewat saluran pernapasan','Contoh: lem dan tiner','Memengaruhi sistem saraf &amp; tubuh']}];
+const T=[
+{e:'⚡',n:'Stimulan',d:'Meningkatkan aktivitas sistem saraf pusat.',k:['Meningkatkan kewaspadaan','Meningkatkan aktivitas tubuh','Membuat lebih terjaga']},
+{e:'🌙',n:'Depresan',d:'Menurunkan atau memperlambat aktivitas sistem saraf pusat.',k:['Memperlambat aktivitas tubuh','Menyebabkan rasa tenang','Menyebabkan rasa mengantuk']},
+{e:'🌀',n:'Halusinogen',d:'Memengaruhi persepsi dan pengalaman sensorik.',k:['Mengubah cara melihat &amp; mendengar','Mengubah cara menafsirkan sekitar','Persepsi berbeda dari keadaan sebenarnya']}];
+const Q=[
+{q:'Zat yang membuat orang ingin memakai lagi terus-menerus disebut…',o:['Zat adiktif','Zat warna','Zat gizi'],a:0},
+{q:'Zat yang MENURUNKAN aktivitas sistem saraf pusat adalah…',o:['Stimulan','Depresan','Halusinogen'],a:1},
+{q:'Lem dan tiner yang disalahgunakan termasuk jenis…',o:['Alkohol','Nikotin','Inhalan'],a:2},
+{q:'Zat yang mengubah persepsi dan pengalaman sensorik adalah…',o:['Halusinogen','Stimulan','Depresan'],a:0}];
+const S=document.getElementById('stage');
+// slide jenis
+document.querySelectorAll('.jenis').forEach(s=>{const j=J[s.dataset.i];
+ s.innerHTML=`<div class="tag">🔬 Materi B • Jenis ${+s.dataset.i+1} dari 5</div><h2>${j.n}</h2>
+ <div class="row" style="align-items:flex-start"><div style="text-align:center;width:300px"><span class="big">${j.e}</span></div>
+ <div style="flex:1"><div class="card" style="margin-bottom:18px"><p>${j.d}</p></div>
+ <div class="grid pop">${j.k.map((x,i)=>`<div class="card" style="padding:14px 20px"><p style="font-size:22px">${['🔹','🔸','🔹','🔸'][i]} ${x}</p></div>`).join('')}</div></div></div>`});
+// tabs
+function tab(i){const t=T[i];document.querySelectorAll('.tab').forEach((b,x)=>b.classList.toggle('a',x==i));
+ document.getElementById('tIc').textContent=t.e;
+ document.getElementById('tBox').innerHTML=`<h3 style="font-size:36px;color:#6c3bff">${t.n}</h3><p>${t.d}</p><ul style="margin-top:8px;padding-left:28px">${t.k.map(x=>`<li style="font-size:23px">${x}</li>`).join('')}</ul>`;
+ document.getElementById('tBox').style.animation='none';void document.getElementById('tBox').offsetWidth;document.getElementById('tBox').style.animation='pop .5s both'}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>tab(+b.dataset.t));tab(0);
+// kuis
+let qi=0,sc=0;
+function quiz(){const q=Q[qi];if(!q){document.getElementById('qQ').innerHTML=`🎊 Skor kamu: <b>${sc}/${Q.length}</b> ${sc>=3?'Hebat sekali!':'Ayo baca materinya lagi!'}`;document.getElementById('qO').innerHTML='<button class="btn" onclick="qi=0;sc=0;quiz()">Main Lagi</button>';document.getElementById('qS').textContent='';if(sc>=3)boom();return}
+ document.getElementById('qQ').innerHTML=`<b>${qi+1}.</b> ${q.q}`;
+ document.getElementById('qO').innerHTML=q.o.map((o,i)=>`<button class="opt" data-i="${i}">${'ABC'[i]}. ${o}</button>`).join('');
+ document.getElementById('qS').textContent=`Soal ${qi+1}/${Q.length} • Skor: ${sc}`;
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=+b.dataset.i==q.a;b.classList.add(ok?'ok':'no');if(ok){sc++;boom(12);setTimeout(()=>{qi++;quiz()},900)}else setTimeout(()=>{b.style.opacity=.4},300)})}
+quiz();
+// confetti
+function boom(n=60){for(let i=0;i<n;i++){const c=document.createElement('div');c.className='cf';c.style.left=Math.random()*1280+'px';c.style.background=`hsl(${Math.random()*360},90%,60%)`;c.style.animationDelay=Math.random()*.8+'s';S.appendChild(c);setTimeout(()=>c.remove(),4000)}}
+// floating background
+['🧬','🧠','⚗️','🔬','💡','🫁','⭐','🧪','🩺','🚭'].forEach((e,i)=>{const f=document.createElement('div');f.className='fl';f.textContent=e;f.style.left=(i*130+20)+'px';f.style.animationDuration=(12+i*2)+'s';f.style.animationDelay=(-i*2)+'s';S.insertBefore(f,S.firstChild)});
+// navigasi
+const sl=[...document.querySelectorAll('.slide')],dots=document.getElementById('dots');let cur=0;
+sl.forEach((_,i)=>{const d=document.createElement('i');d.onclick=()=>go(i);dots.appendChild(d)});
+function go(n){if(n<0||n>=sl.length)return;const o=sl[cur];if(o&&n!=cur){o.classList.remove('on');o.classList.add('out');setTimeout(()=>o.classList.remove('out'),500)}
+ cur=n;sl[n].classList.add('on');
+ [...dots.children].forEach((d,i)=>d.classList.toggle('a',i==n));
+ document.getElementById('bar').style.width=(n+1)/sl.length*100+'%';
+ document.getElementById('pv').style.visibility=n?'visible':'hidden';
+ const nx=document.getElementById('nx');nx.textContent=n==0?'Mulai ▶':n==sl.length-1?'Selesai ✔':'Lanjut ▶';
+ if(n==sl.length-1)boom();}
+document.getElementById('nx').onclick=()=>cur<sl.length-1?go(cur+1):boom();
+document.getElementById('pv').onclick=()=>go(cur-1);
+document.addEventListener('keydown',e=>{if(e.key=='ArrowRight')go(cur+1);if(e.key=='ArrowLeft')go(cur-1)});
+document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('f'));
+// skala 16:9
+function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);S.style.transform=`scale(${s})`}
+addEventListener('resize',fit);fit();
+sl[0].classList.add('on');go(0);
+</script></body></html>
